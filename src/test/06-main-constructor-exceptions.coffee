@@ -1,5 +1,5 @@
 Main.test "
-  Main Constructor exceptions"
+  Main constructor exceptions"
 Main.test
   "new Main 1": (mock) -> [
     Main.throws, "'opt' is type 'number', not 'object'", ->

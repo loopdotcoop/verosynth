@@ -1,8 +1,11 @@
-Visual Synth 0.0.2
+Visual Synth 0.0.3
 ==================
 
 An open source JavaScript library which takes audio inputs, visualises them on 
 `<CANVAS>` elements, and generates audio outputs.
+
+See [visual-synth.loop.coop](http://visual-synth.loop.coop/) for documentation 
+and live examples.
 
 
 
