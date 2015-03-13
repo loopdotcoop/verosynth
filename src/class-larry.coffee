@@ -1,4 +1,4 @@
-class Larray extends Array
+class Larry extends Array
   constructor: (opt={}) ->
     if null == opt then throw new Error "'opt' is null"
     if 'object' != typeof opt then throw new Error "

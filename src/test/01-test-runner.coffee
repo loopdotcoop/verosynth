@@ -1,38 +1,42 @@
 Main.test = (add) ->
   @items ?= []
   results = []
+  mock = null
   if add
     @items.push add
   else
     for item in @items
-      if 'string' == typeof item
-        results.push item + '\n-' + ( new Array(item.length).join '-' ) + '\n'
-      else
-        for name,fn of item
-          [ runner, expect, subject ] = fn(new Main); # prepare the test
-          result = runner(subject, expect) # run the test
-          if ! result
-            results.push "✔ #{name}  "
-          else
-            results.push "✘ #{name}  "
-            results.push "    #{result}  "
-        results.push '\n'
+      switch typeof item
+        when 'string'
+          results.push item + '\n-' + ( new Array(item.length).join '-' ) + '\n'
+        when 'function'
+          mock = item()
+        when 'object'
+          for name,fn of item
+            [ runner, expect, actual ] = fn(mock); # prepare the test
+            result = runner(actual, expect) # run the test
+            if ! result
+              results.push "✔ #{name}  "
+            else
+              results.push "✘ #{name}  "
+              results.push "    #{result}  "
+          results.push '\n'
 
     results.join '\n'
 
 
-Main.throws = (subject, expect) ->
+Main.throws = (actual, expect) ->
   err = false
-  try subject(); catch e then err = e.message
+  try actual(); catch e then err = e.message
   if ! err
     "No exception thrown, expected...\n    #{expect}"
   else if expect != err
     "#{err}\n    ...was thrown, but expected...\n    #{expect}"
 
 
-Main.eq = (subject, expect) ->
+Main.eq = (actual, expect) ->
   err = false
-  try result = subject(); catch e then err = e.message
+  try result = actual(); catch e then err = e.message
   if err
     "Unexpected exception...\n    #{err}"
   else if expect != result
@@ -42,9 +46,9 @@ Main.eq = (subject, expect) ->
       "#{result}\n    ...was returned, but expected...\n    #{expect}"
 
 
-Main.is = (subject, expect) ->
+Main.is = (actual, expect) ->
   err = false
-  try result = subject(); catch e then err = e.message
+  try result = actual(); catch e then err = e.message
   if err
     "Unexpected exception...\n    #{err}"
   else if expect != typeof result
