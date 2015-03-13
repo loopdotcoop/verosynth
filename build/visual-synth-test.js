@@ -117,42 +117,40 @@
   window.VisualSynth = Main;
 
   Main.test = function(add) {
-    var actual, expect, fn, item, mock, name, result, results, runner, _i, _len, _ref, _ref1;
-    if (this.items == null) {
-      this.items = [];
+    var actual, expect, fn, job, mock, name, result, results, runner, _i, _len, _ref, _ref1;
+    if (this.jobs == null) {
+      this.jobs = [];
     }
     results = [];
     mock = null;
     if (add) {
-      return this.items.push(add);
-    } else {
-      _ref = this.items;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
-        switch (typeof item) {
-          case 'string':
-            results.push(item + '\n-' + (new Array(item.length).join('-')) + '\n');
-            break;
-          case 'function':
-            mock = item();
-            break;
-          case 'object':
-            for (name in item) {
-              fn = item[name];
-              _ref1 = fn(mock), runner = _ref1[0], expect = _ref1[1], actual = _ref1[2];
-              result = runner(actual, expect);
-              if (!result) {
-                results.push("✔ " + name + "  ");
-              } else {
-                results.push("✘ " + name + "  ");
-                results.push("    " + result + "  ");
-              }
-            }
-            results.push('\n');
-        }
-      }
-      return results.join('\n');
+      return this.jobs.push(add);
     }
+    _ref = this.jobs;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      job = _ref[_i];
+      switch (typeof job) {
+        case 'string':
+          results.push(("\n\n" + job + "\n-") + (new Array(job.length).join('-')) + '\n');
+          break;
+        case 'function':
+          mock = job();
+          break;
+        case 'object':
+          for (name in job) {
+            fn = job[name];
+            _ref1 = fn(mock), runner = _ref1[0], expect = _ref1[1], actual = _ref1[2];
+            result = runner(actual, expect);
+            if (!result) {
+              results.push("✔ " + name + "  ");
+            } else {
+              results.push("✘ " + name + "  ");
+              results.push("    " + result + "  ");
+            }
+          }
+      }
+    }
+    return results.join('\n');
   };
 
   Main.throws = function(actual, expect) {
@@ -214,6 +212,112 @@
       return [
         Main.throws, "'opt' is type 'string', not 'object'", function() {
           return new Larry('foo');
+        }
+      ];
+    }
+  });
+
+  Main.test("Larry 'push()' exceptions");
+
+  Main.test(function() {
+    return new Larry;
+  });
+
+  Main.test({
+    "Push null": function(mock) {
+      return [
+        Main.throws, "'obj' is null", function() {
+          return mock.push(null);
+        }
+      ];
+    },
+    "Push nothing": function(mock) {
+      return [
+        Main.throws, "'obj' is type 'undefined', not 'object'", function() {
+          return mock.push();
+        }
+      ];
+    },
+    "Push a number": function(mock) {
+      return [
+        Main.throws, "'obj' is type 'number', not 'object'", function() {
+          return mock.push(123);
+        }
+      ];
+    },
+    "Push an empty object": function(mock) {
+      return [
+        Main.throws, "[object Object] `id` is missing", function() {
+          return mock.push({});
+        }
+      ];
+    },
+    "Push an id number 1": function(mock) {
+      return [
+        Main.throws, "[object Object] `id` is type 'number', not 'string'", function() {
+          return mock.push({
+            id: 1
+          });
+        }
+      ];
+    },
+    "Push an id string '1'": function(mock) {
+      return [
+        Main.throws, "[object Object] `id` '1' fails /^[a-z][-a-z0-9]+$/", function() {
+          return mock.push({
+            id: '1'
+          });
+        }
+      ];
+    },
+    "Push an id string 'a'": function(mock) {
+      return [
+        Main.throws, "[object Object] `id` 'a' fails /^[a-z][-a-z0-9]+$/", function() {
+          return mock.push({
+            id: 'a'
+          });
+        }
+      ];
+    },
+    "Push a duplicate id": function(mock) {
+      mock.push({
+        id: 'a1'
+      });
+      return [
+        Main.throws, "Duplicate [object Object] `id` 'a1'", function() {
+          return mock.push({
+            id: 'a1'
+          });
+        }
+      ];
+    }
+  });
+
+  Main.test("Larry 'push()' usage");
+
+  Main.test(function() {
+    return new Larry;
+  });
+
+  Main.test({
+    "Retrieve payload": function(mock) {
+      return [
+        Main.eq, 55, function() {
+          mock.push({
+            id: 'id1',
+            payload: 55
+          });
+          return mock.id1.payload;
+        }
+      ];
+    },
+    "Count two objects": function(mock) {
+      return [
+        Main.eq, 2, function() {
+          mock.push({
+            id: 'id2'
+          });
+          return mock.length;
         }
       ];
     }

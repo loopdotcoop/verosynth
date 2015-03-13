@@ -1,28 +1,25 @@
 Main.test = (add) ->
-  @items ?= []
+  @jobs ?= []
   results = []
   mock = null
   if add
-    @items.push add
-  else
-    for item in @items
-      switch typeof item
-        when 'string'
-          results.push item + '\n-' + ( new Array(item.length).join '-' ) + '\n'
-        when 'function'
-          mock = item()
-        when 'object'
-          for name,fn of item
-            [ runner, expect, actual ] = fn(mock); # prepare the test
-            result = runner(actual, expect) # run the test
-            if ! result
-              results.push "✔ #{name}  "
-            else
-              results.push "✘ #{name}  "
-              results.push "    #{result}  "
-          results.push '\n'
-
-    results.join '\n'
+    return @jobs.push add
+  for job in @jobs
+    switch typeof job
+      when 'string'
+        results.push "\n\n#{job}\n-" + ( new Array(job.length).join '-' ) + '\n'
+      when 'function'
+        mock = job()
+      when 'object'
+        for name,fn of job
+          [ runner, expect, actual ] = fn(mock); # prepare the test
+          result = runner(actual, expect) # run the test
+          if ! result
+            results.push "✔ #{name}  "
+          else
+            results.push "✘ #{name}  "
+            results.push "    #{result}  "
+  results.join '\n'
 
 
 Main.throws = (actual, expect) ->
