@@ -1,5 +1,5 @@
 class Pref
-  toString: -> "[object Pref]"
+  toString: -> '[object Pref]'
 
   constructor: (opt={}) ->
     if null == opt then throw new Error "'opt' is null"

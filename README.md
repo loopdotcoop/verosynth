@@ -1,4 +1,4 @@
-Visual Synth 0.0.3
+Visual Synth 0.0.4
 ==================
 
 An open source JavaScript library which takes audio inputs, visualises them on 

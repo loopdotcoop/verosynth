@@ -1,5 +1,7 @@
 log = console.log.bind console # http://stackoverflow.com/a/12945064
 
+type = (x) -> ({}).toString.call(x).match(/\s([a-z|A-Z]+)/)[1].toLowerCase() # http://tinyurl.com/croll-totype
+
 $  = document.querySelector.bind document # http://stackoverflow.com/a/12637169
 $$ = document.querySelectorAll.bind document
 

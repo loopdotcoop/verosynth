@@ -1,8 +1,11 @@
-Main.test "
-  Larry constructor exceptions"
-Main.test
-  "new Larry 'foo'": (mock) -> [
-    Main.throws, "'opt' is type 'string', not 'object'", ->
-      new Larry 'foo' ]
+test.section "Larry constructor exceptions"
 
-  #@todo investigate unexpected behavior for `new Larry null`
+test.throws [
+
+  "new Larry 'foo'"
+  "'opt' is type 'string', not 'object'"
+  -> new Larry 'foo'
+
+]
+
+#@todo investigate unexpected behavior for `new Larry null`
