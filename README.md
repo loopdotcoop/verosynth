@@ -1,27 +1,27 @@
-Visual Synth 0.0.4
-==================
+VeroSynth 0.0.5
+===============
 
-An open source JavaScript library which takes audio inputs, visualises them on 
-`<CANVAS>` elements, and generates audio outputs.
+An open source JavaScript library which takes audio inputs, adds FX, visualises 
+the signal at various points, and generates audio outputs.
 
-See [visual-synth.loop.coop](http://visual-synth.loop.coop/) for documentation 
-and live examples.
+See [verosynth.loop.coop](http://verosynth.loop.coop/) for documentation and 
+live examples.
 
 
 
 Build
 -----
 
-Build Visual Synth on the command line:
+Build VeroSynth on the command line:
 ```
-$ coffee -j build/visual-synth.js -wc src/*.coffee
-```
-
-Build Visual Synth with tests:
-```
-$ coffee -j build/visual-synth-test.js -wc src/*.coffee src/test/*.coffee
+$ coffee -j build/verosynth.js -wc src/*.coffee
 ```
 
-Test Visual Synth on the client:  
+Build VeroSynth with tests:
+```
+$ coffee -j build/verosynth-test.js -wc src/*.coffee src/test/*.coffee
+```
+
+Test VeroSynth on the client:  
 Open `test.html` in a web browser
 

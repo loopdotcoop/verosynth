@@ -266,7 +266,7 @@
 
   })();
 
-  window.VisualSynth = Main;
+  window.VeroSynth = Main;
 
   test = new Test;
 

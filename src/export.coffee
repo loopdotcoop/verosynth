@@ -1,1 +1,1 @@
-window.VisualSynth = Main #@todo export for RequireJS etc
+window.VeroSynth = Main #@todo export for RequireJS etc

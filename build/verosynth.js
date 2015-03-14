@@ -266,6 +266,6 @@
 
   })();
 
-  window.VisualSynth = Main;
+  window.VeroSynth = Main;
 
 }).call(this);
